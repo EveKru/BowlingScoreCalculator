@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace BowlingCalculator
+namespace BowlingCalculator.Models
 {
     public partial class MainPageViewModel
     {
         public ObservableCollection<FrameData> Frames { get; set; }
+        public int TotalScore { get; set; }
 
         public MainPageViewModel()
         {
@@ -15,7 +16,7 @@ namespace BowlingCalculator
                 Frames.Add(new FrameData { RoundNumber = i });
             }
 
-            Frames.Add(new FrameData { RoundNumber = 10,  IsBonusThrow = true }); 
+            Frames.Add(new FrameData { RoundNumber = 10, IsBonusThrow = true });
         }
     }
 

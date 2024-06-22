@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BowlingCalculator.Services;
+using Microsoft.Extensions.Logging;
 
 namespace BowlingCalculator
 {
@@ -18,6 +19,8 @@ namespace BowlingCalculator
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            // Register BowlingService
+            builder.Services.AddSingleton<BowlingService>();
 
             return builder.Build();
         }

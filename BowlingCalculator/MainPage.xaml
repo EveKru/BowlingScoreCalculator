@@ -52,15 +52,17 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
             <Label x:Name="ResultLabel" Padding="0,0,0,20"
-                   Text="Total Score: 0"
+                   Text="{Binding TotalScore, StringFormat= 'Total Score: {0}' }"
                    FontSize="18"
                    HorizontalOptions="Center" />
             <!-- Button -->
             <Button Text="Calculate Score" Margin="0,0,0,20" Padding="45,0,45,0"
-                    HorizontalOptions="Center" />
+                    HorizontalOptions="Center" 
+                    Clicked="OnCalculateScoreClicked"/>
             <!-- Result Label -->
             <Button Text="Start Over ↻" Padding="55,0,55,0" BackgroundColor="{StaticResource Red}"
-                    HorizontalOptions="Center" />
+                    HorizontalOptions="Center" 
+                    Clicked="OnStartOverClicked"/>
             <!-- Result Label -->
         </StackLayout>
     </ScrollView>
