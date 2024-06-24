@@ -2,68 +2,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BowlingCalculator"
              x:Class="BowlingCalculator.MainPage">
-    <ScrollView>
-        <StackLayout Padding="0,0,0,30">
-            <!-- Image -->
-            <Grid Padding="30,40,0,20">
-                <Image Source="bowlingimage.png"
-                       HeightRequest="140"
-                       Aspect="AspectFit"
-                       HorizontalOptions="Center"
-                       SemanticProperties.Description="bowlingimage" />
-            </Grid>
-            <!-- Label -->
-            <Label Text="Bowling Score Calculator"
-                   FontSize="18"
-                   HorizontalOptions="Center" />
-            <!-- Frames -->
-            <StackLayout Padding="10" BindableLayout.ItemsSource="{Binding Frames}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="20,20,0,20" ColumnSpacing="10" RowSpacing="10" HorizontalOptions="Center">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Frame Grid.Column="0"
-                                   HorizontalOptions="Center" VerticalOptions="Center"
-                                   BackgroundColor="#CCCCCC"
-                                   CornerRadius="50"
-                                   Padding="10">
-                                <Label Text="{Binding RoundNumber, StringFormat='Round {0}'}"
-                                       TextColor="#333333"
-                                       FontSize="16"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Frame>
-                            <Entry Grid.Column="1" Placeholder="" Text="{Binding FirstThrow}" TextChanged="Entry_TextChanged" />
-                            <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" TextChanged="Entry_TextChanged" IsEnabled="{Binding IsSecondThrowEnabled, Mode=TwoWay}" />
-                            <!-- Third throw column, visible only for bonus round -->
-                            <Entry Grid.Column="3" Placeholder="" Text="{Binding ThirdThrow}" 
-                                 IsVisible="{Binding IsBonusThrow}" />
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+    <Grid>
+        <!-- Define Grid Rows and Columns -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- Need Help Button -->
+        <Button Text="Need Help?" BackgroundColor="Transparent"  TextColor="Black" FontSize="12"
+                HorizontalOptions="End" VerticalOptions="End"
+                Clicked="OnInfoPageClicked"
+                Grid.Row="0" Grid.Column="1" Margin="10"/>
+        <!-- Main Content -->
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
+            <StackLayout Padding="0,0,0,100">
+                <!-- Image -->
+                <Grid Padding="40,20,0,40">
+                    <Image Source="bowlingimage.png"
+                           HeightRequest="140"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           SemanticProperties.Description="bowlingimage" />
+                </Grid>
+                <!-- Label -->
+                <Label Text="Bowling Score Calculator"
+                       FontSize="18"
+                       HorizontalOptions="Center" />
+                <!-- Frames -->
+                <StackLayout Padding="10" BindableLayout.ItemsSource="{Binding Frames}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="20,20,0,20" ColumnSpacing="10" RowSpacing="10" HorizontalOptions="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Round Number Labels -->
+                                <Frame Grid.Column="0"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       BackgroundColor="#CCCCCC"
+                                       CornerRadius="50"
+                                       Padding="10">
+                                    <Label Text="{Binding RoundNumber, StringFormat='Round {0}'}"
+                                           TextColor="#333333"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Frame>
+                                <!-- First throw column -->
+                                <Entry Grid.Column="1" Placeholder="" Text="{Binding FirstThrow}" TextChanged="Entry_TextChanged" />
+                                <!-- Second throw column -->
+                                <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" IsEnabled="{Binding IsSecondThrowEnabled}" />
+                                <!-- Third throw column, visible only for bonus round -->
+                                <Entry Grid.Column="3" Placeholder="" Text="{Binding ThirdThrow}" 
+                                     IsVisible="{Binding IsBonusThrow}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <!-- Bowling Score Result Label -->
+                <Label x:Name="ResultLabel" Padding="0,0,0,20"
+                       Text="{Binding TotalScore, StringFormat= 'Total Score: {0}' }"
+                       FontSize="18"
+                       HorizontalOptions="Center" />
+                <!-- Calculate Score Button -->
+                <Button Text="Calculate Score" Margin="0,0,0,20" Padding="45,0,45,0"
+                        HorizontalOptions="Center" 
+                        Clicked="OnCalculateScoreClicked"/>
+                <!-- Start Over Button -->
+                <Button Text="Start Over ↻" Padding="55,0,55,0" BackgroundColor="{StaticResource Red}"
+                        HorizontalOptions="Center" 
+                        Clicked="OnStartOverClicked"/>
             </StackLayout>
-            <Label x:Name="ResultLabel" Padding="0,0,0,20"
-                   Text="{Binding TotalScore, StringFormat= 'Total Score: {0}' }"
-                   FontSize="18"
-                   HorizontalOptions="Center" />
-            <!-- Button -->
-            <Button Text="Calculate Score" Margin="0,0,0,20" Padding="45,0,45,0"
-                    HorizontalOptions="Center" 
-                    Clicked="OnCalculateScoreClicked"/>
-            <!-- Result Label -->
-            <Button Text="Start Over ↻" Padding="55,0,55,0" BackgroundColor="{StaticResource Red}"
-                    HorizontalOptions="Center" 
-                    Clicked="OnStartOverClicked"/>
-            <!-- Result Label -->
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>
+

@@ -8,6 +8,8 @@ namespace BowlingCalculator.Models
     {
         private BowlingService? _bowlingService;
         private ObservableCollection<FrameData>? _frames;
+
+        // OnPropertyChanged implementation
         public ObservableCollection<FrameData> Frames
         {
             get { return _frames!; }
@@ -37,7 +39,8 @@ namespace BowlingCalculator.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public MainPageViewModel() // null?
+        // iterates trough all the frames
+        public MainPageViewModel() 
         {
             Frames = new ObservableCollection<FrameData>();
 
@@ -49,7 +52,7 @@ namespace BowlingCalculator.Models
             Frames.Add(new FrameData { RoundNumber = 10, IsBonusThrow = true });
         }
 
-        // Method to handle user input for entering score
+        // calls the "EnterScoreForFrame" method from bowlingservice
         public void EnterScoreForFrame(FrameData frame, string input)
         {
             _bowlingService?.EnterScoreForFrame(frame, input);

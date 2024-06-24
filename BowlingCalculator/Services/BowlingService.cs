@@ -9,12 +9,12 @@ namespace BowlingCalculator.Services
         {
             totalScore = 0;
 
+            // iterates all the frames
             for (int i = 0; i < 10; i++)
             {
                 var frame = frames[i];
 
                 int firstThrow = ParseThrow(frame.FirstThrow ?? "");
-                frame.IsSecondThrowEnabled = firstThrow != 10; // Disable second throw if strike
                 int secondThrow = frame.IsSecondThrowEnabled ? ParseThrow(frame.SecondThrow ?? "", firstThrow) : 0;
                 int thirdThrow = frame.IsBonusThrow ? ParseThrow(frame.ThirdThrow ?? "") : 0;
 
@@ -59,7 +59,7 @@ namespace BowlingCalculator.Services
             }
         }
 
-        // Method to parse throw values
+        // parses throw values
         public int ParseThrow(string throwValue, int firstThrow = 0) 
         {
             if (throwValue.ToLower() == "x")
@@ -81,6 +81,7 @@ namespace BowlingCalculator.Services
             return 0; // Treat empty or invalid entries as 0
         }
 
+        // resets game
         public ObservableCollection<FrameData> ResetGame()
         {
             var frames = new ObservableCollection<FrameData>();
@@ -95,7 +96,7 @@ namespace BowlingCalculator.Services
             return frames;
         }
 
-        // Method to handle user input for entering score
+        //  handles the enabling and disabling of the second throw frame when entering a score
         public void EnterScoreForFrame(FrameData frame, string input)
         {
             if (input.ToLower() == "x" || input == "10")
