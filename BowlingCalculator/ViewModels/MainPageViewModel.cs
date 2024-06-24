@@ -1,15 +1,45 @@
-﻿using System.Collections.ObjectModel;
+﻿using BowlingCalculator.Services;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace BowlingCalculator.Models
 {
-    public partial class MainPageViewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<FrameData> Frames { get; set; }
-        public int TotalScore { get; set; }
-
-        public MainPageViewModel()
+        private BowlingService? _bowlingService;
+        private ObservableCollection<FrameData>? _frames;
+        public ObservableCollection<FrameData> Frames
         {
-            Frames = [];
+            get { return _frames!; }
+            set
+            {
+                _frames = value;
+                OnPropertyChanged(nameof(Frames));
+            }
+        }
+
+        // no actual use and implementation of the OnPropertyChanged for TotalScore at the moment. Is currently manually triggered.
+        private int _totalScore;
+        public int TotalScore
+        {
+            get { return _totalScore; }
+            set
+            {
+                _totalScore = value;
+                OnPropertyChanged(nameof(TotalScore));
+            }
+        }
+
+        // INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public MainPageViewModel() // null?
+        {
+            Frames = new ObservableCollection<FrameData>();
 
             for (int i = 1; i <= 9; i++)
             {
@@ -18,15 +48,14 @@ namespace BowlingCalculator.Models
 
             Frames.Add(new FrameData { RoundNumber = 10, IsBonusThrow = true });
         }
-    }
 
-    public class FrameData
-    {
-        public int RoundNumber { get; set; }
-        public string? FirstThrow { get; set; }
-        public string? SecondThrow { get; set; }
-        public string? ThirdThrow { get; set; } // Third throw for bonus round
-        public bool IsBonusThrow { get; set; } = false;
+        // Method to handle user input for entering score
+        public void EnterScoreForFrame(FrameData frame, string input)
+        {
+            _bowlingService?.EnterScoreForFrame(frame, input);
+            OnPropertyChanged(nameof(Frames)); // Notify UI of changes
+        }
+
     }
 }
 

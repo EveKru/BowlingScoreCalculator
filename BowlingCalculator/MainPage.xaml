@@ -42,8 +42,8 @@
                                        FontAttributes="Bold"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Frame>
-                            <Entry Grid.Column="1" Placeholder="" Text="{Binding FirstThrow}" />
-                            <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" />
+                            <Entry Grid.Column="1" Placeholder="" Text="{Binding FirstThrow}" TextChanged="Entry_TextChanged" />
+                            <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" TextChanged="Entry_TextChanged" IsEnabled="{Binding IsSecondThrowEnabled, Mode=TwoWay}" />
                             <!-- Third throw column, visible only for bonus round -->
                             <Entry Grid.Column="3" Placeholder="" Text="{Binding ThirdThrow}" 
                                  IsVisible="{Binding IsBonusThrow}" />

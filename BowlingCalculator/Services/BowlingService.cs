@@ -14,10 +14,11 @@ namespace BowlingCalculator.Services
                 var frame = frames[i];
 
                 int firstThrow = ParseThrow(frame.FirstThrow ?? "");
-                int secondThrow = ParseThrow(frame.SecondThrow ?? "");
+                frame.IsSecondThrowEnabled = firstThrow != 10; // Disable second throw if strike
+                int secondThrow = frame.IsSecondThrowEnabled ? ParseThrow(frame.SecondThrow ?? "", firstThrow) : 0;
                 int thirdThrow = frame.IsBonusThrow ? ParseThrow(frame.ThirdThrow ?? "") : 0;
 
-
+                // Add frame score
                 totalScore += firstThrow + secondThrow;
 
                 // Check for strike
@@ -29,14 +30,14 @@ namespace BowlingCalculator.Services
                         int nextFirstThrow = ParseThrow(nextFrame.FirstThrow ?? "");
                         totalScore += nextFirstThrow;
 
-                        if (nextFirstThrow == 10 && i + 2 < 10) // Consecutive strikes
+                        if (nextFirstThrow == 10 && i + 2 < 10)
                         {
                             var nextNextFrame = frames[i + 2];
                             totalScore += ParseThrow(nextNextFrame.FirstThrow ?? "");
                         }
                         else
                         {
-                            totalScore += ParseThrow(nextFrame.SecondThrow ?? "");
+                            totalScore += ParseThrow(nextFrame.SecondThrow ?? "", firstThrow = nextFirstThrow); 
                         }
                     }
                 }
@@ -58,13 +59,25 @@ namespace BowlingCalculator.Services
             }
         }
 
-        // method to parse throw values
-        public int ParseThrow(string throwValue)
+        // Method to parse throw values
+        public int ParseThrow(string throwValue, int firstThrow = 0) 
         {
+            if (throwValue.ToLower() == "x")
+            {
+                return 10; // Strike
+            }
+
+            if (throwValue == "/") 
+            {
+                var value = 10 - firstThrow; 
+                return value; 
+            }
+
             if (int.TryParse(throwValue, out int parsedValue))
             {
                 return parsedValue;
             }
+
             return 0; // Treat empty or invalid entries as 0
         }
 
@@ -74,14 +87,34 @@ namespace BowlingCalculator.Services
 
             for (int i = 1; i <= 9; i++)
             {
-                frames.Add(new FrameData { RoundNumber = i });
+                frames.Add(new FrameData { RoundNumber = i, IsSecondThrowEnabled = true });
             }
 
-            frames.Add(new FrameData { RoundNumber = 10, IsBonusThrow = true });
+            frames.Add(new FrameData { RoundNumber = 10, IsBonusThrow = true, IsSecondThrowEnabled = true });
 
             return frames;
         }
+
+        // Method to handle user input for entering score
+        public void EnterScoreForFrame(FrameData frame, string input)
+        {
+            if (input.ToLower() == "x" || input == "10")
+            {
+                frame.FirstThrow = input.ToLower() == "x" ? "X" : "10";
+                frame.IsSecondThrowEnabled = false; // Disable second throw if strike
+            }
+            else
+            {
+                frame.FirstThrow = input;
+                frame.IsSecondThrowEnabled = true; // Enable second throw for other cases
+            }
+        }
+
     }
 }
+
+
+
+
 
 

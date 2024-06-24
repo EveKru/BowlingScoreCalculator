@@ -12,7 +12,8 @@ namespace BowlingCalculator
         {
             InitializeComponent();
             _model = new MainPageViewModel();
-            _bowlingService = new BowlingService();
+            _bowlingService = new BowlingService(); // Instantiate BowlingService correctly
+            _model.Frames = _bowlingService.ResetGame(); // Initialize frames using ResetGame() method
             BindingContext = _model;
         }
 
@@ -36,6 +37,20 @@ namespace BowlingCalculator
             ResultLabel.Text = "Total Score: 0";
             BindingContext = null;
             BindingContext = _model; // Reset
+        }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var entry = sender as Entry;
+            if (entry != null)
+            {
+                var frameData = entry.BindingContext as FrameData;
+                if (frameData != null)
+                {
+                    var viewModel = BindingContext as MainPageViewModel;
+                    viewModel?.EnterScoreForFrame(frameData, entry.Text);
+                }
+            }
         }
     }
 }
