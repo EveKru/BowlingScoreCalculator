@@ -1,5 +1,6 @@
 ﻿using BowlingCalculator.Models;
 using BowlingCalculator.Services;
+using System.Text.RegularExpressions;
 
 namespace BowlingCalculator
 {
@@ -8,11 +9,11 @@ namespace BowlingCalculator
         private readonly MainPageViewModel _model;
         private BowlingService _bowlingService;
 
-        public MainPage()
+        public MainPage(MainPageViewModel viewModel, BowlingService bowlingService)
         {
             InitializeComponent();
-            _model = new MainPageViewModel();
-            _bowlingService = new BowlingService(); 
+            _model = viewModel;
+            _bowlingService = bowlingService; 
             _model.Frames = _bowlingService.ResetGame();
             BindingContext = _model;
         }
@@ -48,13 +49,58 @@ namespace BowlingCalculator
             if (entry != null)
             {
                 var frameData = entry.BindingContext as FrameData;
+
                 if (frameData != null)
                 {
-                    var viewModel = BindingContext as MainPageViewModel;
-                    viewModel?.EnterScoreForFrame(frameData, entry.Text);
+                    int currentFirstThrow = _bowlingService.ParseThrow(frameData.FirstThrow ?? "");
+                    int currentSecondThrow = _bowlingService.ParseThrow(frameData.SecondThrow ?? "");
+
+                   var newText = entry.Text;
+
+                    if (IsTextAllowed(newText, currentFirstThrow, currentSecondThrow))
+                    {
+                        var viewModel = BindingContext as MainPageViewModel;
+                        viewModel?.EnterScoreForFrame(frameData, newText);
+                    }
+                    else
+                    {
+                        // Revert to old text if new text is invalid
+                        entry.Text = e.OldTextValue;
+                    }
                 }
             }
         }
+
+        private static bool IsTextAllowed(string text, int currentFirstThrow, int currentSecondThrow)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return true; // Allow empty or whitespace input
+            }
+
+            // Allow only valid characters or numbers from 0 to 10
+            var regex = new Regex("^[Xx/0-9]*$");
+            if (!regex.IsMatch(text))
+            {
+                return false; // Invalid characters present
+            }
+
+            // Check if input is a valid number and ensure it's <= 10 and does not exceed max points with first throw
+            if (int.TryParse(text, out int number))
+            {
+                return number >= 0 && number <= 10 && (currentFirstThrow + currentSecondThrow <= 10);
+            }
+
+            // Check for valid characters 'X' or '/'
+            if (text.Equals("X", StringComparison.OrdinalIgnoreCase) || text == "/")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         // navigate to "ExtraInfoPage"
         private async void OnInfoPageClicked(object sender, EventArgs e)
         {

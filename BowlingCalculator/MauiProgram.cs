@@ -1,4 +1,5 @@
-﻿using BowlingCalculator.Services;
+﻿using BowlingCalculator.Models;
+using BowlingCalculator.Services;
 using Microsoft.Extensions.Logging;
 
 namespace BowlingCalculator
@@ -16,11 +17,10 @@ namespace BowlingCalculator
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
-            // Register BowlingService
-            builder.Services.AddSingleton<BowlingService>();
+            // Dependency Injection
+            builder.Services.AddTransient<BowlingService>();
+            builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<MainPage>();
 
             return builder.Build();
         }

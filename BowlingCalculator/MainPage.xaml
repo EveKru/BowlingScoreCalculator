@@ -62,9 +62,9 @@
                                 <!-- First throw column -->
                                 <Entry Grid.Column="1" Placeholder="" Text="{Binding FirstThrow}" TextChanged="Entry_TextChanged" />
                                 <!-- Second throw column -->
-                                <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" IsEnabled="{Binding IsSecondThrowEnabled}" />
+                                <Entry Grid.Column="2" Placeholder="" Text="{Binding SecondThrow}" TextChanged="Entry_TextChanged" IsEnabled="{Binding IsSecondThrowEnabled}" />
                                 <!-- Third throw column, visible only for bonus round -->
-                                <Entry Grid.Column="3" Placeholder="" Text="{Binding ThirdThrow}" 
+                                <Entry Grid.Column="3" Placeholder="" Text="{Binding ThirdThrow}" TextChanged="Entry_TextChanged" 
                                      IsVisible="{Binding IsBonusThrow}" />
                             </Grid>
                         </DataTemplate>

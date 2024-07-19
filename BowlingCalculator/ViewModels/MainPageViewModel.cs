@@ -42,7 +42,7 @@ namespace BowlingCalculator.Models
         // iterates trough all the frames
         public MainPageViewModel() 
         {
-            Frames = new ObservableCollection<FrameData>();
+            Frames = [];
 
             for (int i = 1; i <= 9; i++)
             {

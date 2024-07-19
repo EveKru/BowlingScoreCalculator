@@ -4,7 +4,7 @@ namespace BowlingCalculator.Models
 {
     public class FrameData : INotifyPropertyChanged
     {
-        private string _firstThrow = "";
+        private string? _firstThrow;
         private string? _secondThrow;
         private string? _thirdThrow;
         private bool _isSecondThrowEnabled;
@@ -12,7 +12,7 @@ namespace BowlingCalculator.Models
         public int RoundNumber { get; set; }
         public bool IsBonusThrow { get; set; }
 
-        public string FirstThrow
+        public string? FirstThrow
         {
             get => _firstThrow;
             set
@@ -23,7 +23,7 @@ namespace BowlingCalculator.Models
                     OnPropertyChanged(nameof(FirstThrow));
 
                     // Disable second throw if strike (either "X" or "10")
-                    IsSecondThrowEnabled = !(value.ToLower() == "x" || value == "10");
+                    IsSecondThrowEnabled = !(value?.ToLower() == "x" || value == "10");
                 }
             }
         }

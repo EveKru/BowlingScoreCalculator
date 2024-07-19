@@ -3,7 +3,7 @@
              x:Class="BowlingCalculator.ExtraInfoPage"
              Title="Bowling Score Rules">
     <ScrollView>
-        <StackLayout Padding="40">
+        <StackLayout Padding="40" >
             <Label Text="Bowling Score Rules" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20" />
             <Label Text="1. A game of bowling consists of 10 frames. In each frame, the bowler has two chances to knock down as many pins as possible with their bowling ball." Margin="0,0,0,10" />
             <Label Text="2. If the bowler knocks down all 10 pins on the first try (a strike), the frame ends immediately." Margin="0,0,0,10" />
@@ -14,6 +14,10 @@
             <Label Text="7. In the 10th frame, a bowler who rolls a strike or spare gets extra rolls to complete the frame." Margin="0,0,0,10" />
             <Label Text="8. The maximum score in a game of bowling is 300, which is achieved by rolling 12 strikes in a row." Margin="0,0,0,10" />
             <Label Text="Did you know? You can use both (10) and (X) for a strike and (5) and (/) for a spare!" Margin="0,0,0,10" FontAttributes="Bold" />
+            <Label Text="Functionality:" Margin="0,10,0,10" FontAttributes="Bold" TextColor="Red"></Label>
+            <Label Text="1. No letters are accepted, only numbers (0-10), (/) and (x)." Margin="0,0,0,10"></Label>
+            <Label Text="2. Entering an (0) or leaving the input as empty both counts as zero points." Margin="0,0,0,10"></Label>
+            <Label Text="3. You cannot enter a higher number than 10 or more than the maximum of 10 points for each row." Margin="0,0,0,10"></Label>
         </StackLayout>
     </ScrollView>
 </ContentPage>
