@@ -23,4 +23,4 @@ Feel free to use and experiment with the code. Contributions to improve the appl
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Screenshots
-<img src="Resources/Images/ScreenShot_1.png"> <img src="Resources/Images/ScreenShot_2.png">
+<img src="BowlingCalculator/Resources/Images/ScreenShot_1.png" width="200" height="250"> <img src="BowlingCalculator/Resources/Images/ScreenShot_2.png" width="200" height="250">
