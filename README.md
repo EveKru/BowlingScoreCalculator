@@ -1,7 +1,7 @@
 # Bowling Score Calculator
 
 ## Introduction
-Tis Bowling Score Calculator is a application designed to help calculate bowling scores. It allows users to input their scores frame-by-frame and provides the total score with consideration of strikes, spares, and standard rules of bowling.
+This Bowlingscore calculator, built in .NET MAUI, is an application designed to help calculate bowling scores. It allows users to input their scores frame-by-frame and provides the total score with consideration of strikes, spares, and standard rules of bowling.
 
 ## Limitations
 ❗Please note that currently, the application is only designed to work on Windows machines and may not function correctly on emulators yet. ❗
