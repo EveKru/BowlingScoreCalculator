@@ -85,6 +85,11 @@ namespace BowlingCalculator
                 return false; // Invalid characters present
             }
 
+            if (text.Length > 1 && text.All(c => c == '0'))
+            {
+                return false; // Prevent multiple zeros
+            }
+
             // Check if input is a valid number and ensure it's <= 10 and does not exceed max points with first throw
             if (int.TryParse(text, out int number))
             {
