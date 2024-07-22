@@ -4,7 +4,7 @@
 Tis Bowling Score Calculator is a application designed to help calculate bowling scores. It allows users to input their scores frame-by-frame and provides the total score with consideration of strikes, spares, and standard rules of bowling.
 
 ## Limitations
-❗Please note that currently, the application is only designed to work on Windows machines and may not function correctly on emulators. ❗
+❗Please note that currently, the application is only designed to work on Windows machines and may not function correctly on emulators yet. ❗
 
 ## Installation
 1. **Clone the repository:**
@@ -23,4 +23,4 @@ Feel free to use and experiment with the code. Contributions to improve the appl
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Screenshots
-<img scr="resources/images/ScreenShot_1.png"> <img scr="resources/images/ScreenShot_2.png">
+<img src="Resources/Images/ScreenShot_1.png"> <img src="Resources/Images/ScreenShot_2.png">
